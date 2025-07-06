@@ -9,11 +9,12 @@ services:
     environment:
       GROUP_ID: ${GROUP_ID}
       TOKEN: ${TOKEN}
-    restart: unless-stopped
+    # restart: unless-stopped
     volumes:
       - ./data:/app/data
+      - ./main.py:/app/main.py  # Автоматическое обновление файла
     networks:
-      - app_network
+      - vk_bot_network
 
   redis:
     image: redis:7.4-alpine
@@ -39,11 +40,11 @@ services:
         max-file: "5"
         compress: "true"
     networks:
-      - app_network
+      - vk_bot_network
 
-  networks:
-    app_network:
-      name: app_network
+networks:
+  vk_bot_network:
+    name: vk_bot_network
 
 # postgres:
 #   image: postgres:17-alpine

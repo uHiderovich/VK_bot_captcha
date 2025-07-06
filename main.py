@@ -67,13 +67,18 @@ async def main():
     # asyncio.create_task(check_pending_users())
 
     for event in longpoll.listen():
-        if event.type == VkBotLongPoll.EVENT_GROUP_JOIN:
-            user_id = event.message.user_id
-            await asyncio.create_task(handle_new_member(user_id))
-        elif event.type == VkBotEventType.MESSAGE_NEW:
+        # if event.type == VkBotLongPoll.EVENT_GROUP_JOIN:
+        #     user_id = event.message.user_id
+        #     await asyncio.create_task(handle_new_member(user_id))
+        # elif event.type == VkBotEventType.MESSAGE_NEW:
+        #     user_id = event.message.from_id
+        #     message = event.message.text
+        #     await asyncio.create_task(handle_user_message(user_id, message))
+
+        if event.type == VkBotEventType.MESSAGE_NEW:
             user_id = event.message.from_id
             message = event.message.text
-            await asyncio.create_task(handle_user_message(user_id, message))
+            await asyncio.create_task(send_message(user_id, message))
 
 
 if __name__ == "__main__":
